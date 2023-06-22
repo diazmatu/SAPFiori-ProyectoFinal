@@ -1,0 +1,133 @@
+<mvc:View controllerName="proyectofinal.controller.Master"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+	xmlns:t="sap.ui.table">
+    <Page id="page" title="{i18n>TitleMaster}">
+        <t:Table
+				id="table"
+				rows="{/Products}"
+				visibleRowCount="20"
+				threshold="15"
+				enableBusyIndicator="true"
+				selectionMode="None"
+				ariaLabelledBy="title">		
+                <t:extension>
+					<OverflowToolbar style="Clear">
+						<Title id="title" text="Products"/>
+						<ToolbarSpacer/>
+
+						<Switch
+							state="true"
+							customTextOn="on"
+							customTextOff="off"
+							tooltip="enable details button"
+							change="onSwitchChange"/>
+<!--
+                        <ToggleButton
+							icon="sap-icon://show"
+							tooltip="Enable / Disable Visibility Menu Entries"
+							pressed="{ui>/showVisibilityMenuEntry}"/>
+						<Label text="Selection Mode" labelFor="select1"/>
+-->
+						<Label text="Status" labelFor="input1"/>
+						<Input
+							id="input1"
+							value="0"
+							width="10%"
+							tooltip="limit"
+							change="onLimitChange"/>
+						<ToolbarSeparator/>
+
+                        <SearchField
+							placeholder="Filter"
+							search="handleSearch"
+							width="15rem"/>
+					</OverflowToolbar>
+				</t:extension>
+
+				<t:columns>
+
+					<t:Column width="11rem" id="ColumnProductName">
+						<Label text="Product Name" id="LabelProductName"/>
+						<t:template>
+							<Text id="TextProductName" text="{ProductName}" wrapping="false" />
+						</t:template>
+					</t:Column>
+
+                    <t:Column width="11rem" id="ColumnUnitPrice">
+						<Label text="Unit Price" id="LabelUnitPrice"/>
+						<t:template>
+							<Text id="TextUnitPrice" text="{UnitPrice}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    
+                    <t:Column width="11rem" id="ColumnUnitsInStock">
+						<Label text="Units In Stock" id="LabelUnitsInStock"/>
+						<t:template>
+							<Text id="TextUnitsInStock" text="{UnitsInStock}" wrapping="false" />
+						</t:template>
+					</t:Column>
+                    
+					<t:Column width="11rem" id="ColumnCategoryName">
+						<Label text="Category Name" id="LabelCategoryName"/>
+						<t:template>
+							<Text id="TextCategoryName" text="{CategoryID}" wrapping="false" />
+						</t:template>
+					</t:Column>
+
+					<t:Column width="11rem" id="ColumnSupplierName">
+						<Label text="Supplier Name" id="LabelSupplierName"/>
+						<t:template>
+							<Text id="TextSupplierrName" text="{SupplierID}" wrapping="false" />
+						</t:template>
+					</t:Column>
+
+                    <t:Column width="9rem" id="ColumnDiscontinued">
+						<Label text="Discontinued" id="LabelDiscontinued"/>
+						<t:template>
+                            <ObjectStatus id="Discontinued" text="{= ${Discontinued} ? ${i18n>Discontinued} : ${i18n>Available} }" state="{= ${Discontinued}? 'Error' : 'Success' }"/>
+						</t:template>
+					</t:Column>
+
+					<t:Column width="9rem" id="ColumnStatus">
+						<Label text="Status" id="LabelStatus"/>
+						<t:template>
+                            <ObjectStatus id="Status" 
+                                text= "{parts: ['${UnitPrice}', 'input1>/value'],
+                                    formatter: '.formatter.statusText'
+                                }"
+                            />
+						</t:template>
+					</t:Column>
+
+					<t:Column width="9rem" id="ColumnDetails">
+						<Label text="Details" id="LabelDetail"/>
+						<t:template>
+                            <Button id="ButtonDetails"                             
+                                    text="Details"
+                                    press=".onDraggableDialogPress"
+                                    class="sapUiSmallMarginBottom"
+                                    ariaHasPopup="Dialog" />
+						</t:template>
+					</t:Column>
+
+					<t:Column width="9rem" id="ColumnNavigate">
+						<t:template>
+                            <Button id="ButtonNavigate"
+                                    press=".onPressNavigate"
+                                    class="sapUiSmallMarginBottom"
+                                    ariaHasPopup="Dialog" 
+                                    icon="sap-icon://feeder-arrow"/>
+						</t:template>
+					</t:Column>
+
+
+				</t:columns>
+                <t:rowActionTemplate>
+                    <t:RowAction>
+                            <t:RowActionItem press="onSelectPriceGroup"	type="Navigation" icon="sap-icon://feeder-arrow" />
+                    </t:RowAction>
+                </t:rowActionTemplate>
+			</t:Table>
+    </Page>
+</mvc:View>
